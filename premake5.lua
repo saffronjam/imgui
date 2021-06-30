@@ -18,18 +18,24 @@ project (module.Project)
 	targetdir (_MAIN_SCRIPT_DIR .. "/Build/Bin/" .. OutputDirectory .. "%{prj.name}")
 	objdir (_MAIN_SCRIPT_DIR .. "/Build/Obj/" .. OutputDirectory .. "%{prj.name}")
 	
+	location (_MAIN_SCRIPT_DIR .. "/Build")
+
 	files
 	{
         "source/imconfig.h",
-        "source/imgui.h",
-        "source/imgui.cpp",
-        "source/imgui_draw.cpp",
-        "source/imgui_internal.h",
-        "source/imgui_widgets.cpp",
-        "source/imstb_rectpack.h",
-        "source/imstb_truetype.h",
-        "source/imgui_demo.cpp",
+		"source/imgui.cpp",
+		"source/imgui.h",
+		"source/imgui_demo.cpp",
+		"source/imgui_draw.cpp",
+		"source/imgui_internal.h",
+		"source/imgui_tables.cpp",
+		"source/imgui_widgets.cpp",
+		"source/imstb_rectpack.h",
+		"source/imstb_textedit.h",
+		"source/imstb_truetype.h"
     }
+
+
     
 	filter "system:windows"
 		systemversion "latest"
