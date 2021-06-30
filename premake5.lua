@@ -14,10 +14,10 @@ project (module.Project)
     kind "StaticLib"
     language "C++"
     staticruntime "on"
-	
+
 	targetdir (_MAIN_SCRIPT_DIR .. "/Build/Bin/" .. OutputDirectory .. "%{prj.name}")
 	objdir (_MAIN_SCRIPT_DIR .. "/Build/Obj/" .. OutputDirectory .. "%{prj.name}")
-	
+
 	location (_MAIN_SCRIPT_DIR .. "/Build")
 
 	files
