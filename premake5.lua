@@ -1,27 +1,33 @@
 ---@diagnostic disable: undefined-global
 
-OutputDirectory = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/"
-BasePath = debug.getinfo(1).source:match("@?(.*/)")
+local function GetBasePath()
+	return debug.getinfo(1).source:match("@?(.*/)")
+end
 
-module = {}
+local module = {}
 
 module.Project = "ImGui"
-module.Include = {
-	BasePath .. "source"
-}
+module.Include = function ()
+	includedirs {
+		GetBasePath() .. "source"
+	}
+end
+module.Link = function ()
+	links {
+		module.Project
+	}
+end
 
 project (module.Project)
     kind "StaticLib"
     language "C++"
-    staticruntime "on"
+    staticruntime("On")
 
-	targetdir (_MAIN_SCRIPT_DIR .. "/Build/Bin/" .. OutputDirectory .. "%{prj.name}")
-	objdir (_MAIN_SCRIPT_DIR .. "/Build/Obj/" .. OutputDirectory .. "%{prj.name}")
+	targetdir (OutBin)
+	objdir (OutObj)
+	location (OutLoc)
 
-	location (_MAIN_SCRIPT_DIR .. "/Build")
-
-	files
-	{
+	files {
         "source/imconfig.h",
 		"source/imgui.cpp",
 		"source/imgui.h",
@@ -35,21 +41,16 @@ project (module.Project)
 		"source/imstb_truetype.h"
     }
 
-
-    
-	filter "system:windows"
-		systemversion "latest"
+    includedirs {
+        "source"
+    }
 
 	filter "configurations:Debug"
-		runtime "Debug"
-		symbols "on"
+		defines { "DEBUG" }
+		symbols "On"
 
-	filter "configurations:Release"
-		runtime "Release"
-		optimize "on"
-
-	filter "configurations:Dist"
-		runtime "Release"
-		optimize "on"
+	filter "configurations:Release or Dist"
+		defines { "NDEBUG" }
+		optimize "On"
 
 return module
